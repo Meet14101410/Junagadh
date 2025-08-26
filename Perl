@@ -1,0 +1,47 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+use Data::Dumper;
+
+my $data_file = 'junagadh_data.txt';
+open my $fh, '<', $data_file or die "Cannot open '$data_file': $!";
+
+my %junagadh_data;
+
+# Read and parse the data file
+while (my $line = <$fh>) {
+    chomp $line;
+    next if $line =~ /^#/;
+    my ($type, $name, $description) = split /\|/, $line;
+    push @{$junagadh_data{$type}}, {
+        name => $name,
+        description => $description
+    };
+}
+close $fh;
+
+# Generate a report for a specific category
+sub generate_report_by_type {
+    my $type = shift;
+    print "--- Report on $type in Junagadh ---\n";
+    if (exists $junagadh_data{$type}) {
+        foreach my $item (@{$junagadh_data{$type}}) {
+            print "  - Name: $item->{name}\n";
+            print "    Description: $item->{description}\n";
+        }
+    } else {
+        print "No data found for type '$type'.\n";
+    }
+    print "\n";
+}
+
+# Main script logic
+generate_report_by_type("Historical Place");
+generate_report_by_type("Hill/Religious Site");
+
+__END__
+# Data for junagadh_data.txt
+# Type|Name|Description
+Historical Place|Uparkot Fort|An ancient fort in the heart of the city with historical caves.
+Hill/Religious Site|Girnar|A holy mountain range with temples of various religions on its peaks.
+Tomb/Historical Place|Mahabat Maqbara|A mausoleum known for its unique blend of architecture.
