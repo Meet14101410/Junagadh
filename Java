@@ -1,0 +1,75 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+// Represents a point of interest
+class PointOfInterest {
+    private String name;
+    private String type;
+    private String description;
+
+    public PointOfInterest(String name, String type, String description) {
+        this.name = name;
+        this.type = type;
+        this.description = description;
+    }
+
+    public String getName() { return name; }
+    public String getType() { return type; }
+    public String getDescription() { return description; }
+
+    @Override
+    public String toString() {
+        return "Name: " + name + ", Type: " + type + ", Description: " + description;
+    }
+}
+
+// Manages information about Junagadh
+public class JunagadhInfoSystem {
+    private Map<String, String> cityFacts;
+    private List<PointOfInterest> pointsOfInterest;
+
+    public JunagadhInfoSystem() {
+        cityFacts = new HashMap<>();
+        cityFacts.put("Location", "Gujarat, India");
+        cityFacts.put("Population", "Approx. 400,000 (2023)");
+        cityFacts.put("Known For", "Girnar hills, Asiatic lions, historical forts, and temples");
+
+        pointsOfInterest = new ArrayList<>();
+        pointsOfInterest.add(new PointOfInterest("Uparkot Fort", "Historical Place", "An ancient fort in the heart of the city with historical caves."));
+        pointsOfInterest.add(new PointOfInterest("Girnar", "Hill/Religious Site", "A holy mountain range with temples of various religions on its peaks."));
+        pointsOfInterest.add(new PointOfInterest("Mahabat Maqbara", "Tomb/Historical Place", "A mausoleum known for its unique blend of architecture."));
+    }
+
+    public void getCityFact(String factName) {
+        if (cityFacts.containsKey(factName)) {
+            System.out.println(factName + ": " + cityFacts.get(factName));
+        } else {
+            System.out.println("Fact not found: " + factName);
+        }
+    }
+
+    public void searchPointsOfInterest(String searchTerm) {
+        System.out.println("\n--- Search Results for '" + searchTerm + "' ---");
+        boolean found = false;
+        for (PointOfInterest poi : pointsOfInterest) {
+            if (poi.getName().contains(searchTerm) || poi.getType().contains(searchTerm)) {
+                System.out.println(poi.toString());
+                System.out.println("----------------------------------------");
+                found = true;
+            }
+        }
+        if (!found) {
+            System.out.println("No matching points of interest found.");
+        }
+    }
+
+    public static void main(String[] args) {
+        JunagadhInfoSystem infoSystem = new JunagadhInfoSystem();
+        infoSystem.getCityFact("Population");
+        infoSystem.getCityFact("Known For");
+        infoSystem.searchPointsOfInterest("Fort");
+        infoSystem.searchPointsOfInterest("Girnar");
+    }
+}
