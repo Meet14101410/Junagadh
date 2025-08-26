@@ -1,0 +1,42 @@
+class JunagadhInfoSystem:
+    """A basic information system for Junagadh city."""
+    
+    def __init__(self):
+        self.city_facts = {
+            "Location": "Gujarat, India",
+            "Population": "Approx. 400,000 (2023)",
+            "Known For": "Girnar hills, Asiatic lions, historical forts, and temples"
+        }
+        self.points_of_interest = [
+            {"name": "Uparkot Fort", "type": "Historical Place", "description": "An ancient fort in the heart of the city with historical caves."},
+            {"name": "Girnar", "type": "Hill/Religious Site", "description": "A holy mountain range with temples of various religions on its peaks."},
+            {"name": "Mahabat Maqbara", "type": "Tomb/Historical Place", "description": "A mausoleum known for its unique blend of architecture."}
+        ]
+
+    def get_city_fact(self, fact_name):
+        """Retrieves and prints a specific city fact."""
+        if fact_name in self.city_facts:
+            print(f"{fact_name}: {self.city_facts[fact_name]}")
+        else:
+            print(f"Fact not found: {fact_name}")
+
+    def search_points_of_interest(self, search_term):
+        """Searches for points of interest by name or type."""
+        print(f"\n--- Search Results for '{search_term}' ---")
+        found = False
+        for poi in self.points_of_interest:
+            if search_term.lower() in poi["name"].lower() or search_term.lower() in poi["type"].lower():
+                print(f"Name: {poi['name']}")
+                print(f"Type: {poi['type']}")
+                print(f"Description: {poi['description']}")
+                print("-" * 40)
+                found = True
+        if not found:
+            print("No matching points of interest found.")
+
+# Main script logic
+info_system = JunagadhInfoSystem()
+info_system.get_city_fact("Population")
+info_system.get_city_fact("Known For")
+info_system.search_points_of_interest("Fort")
+info_system.search_points_of_interest("Girnar")
