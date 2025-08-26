@@ -1,0 +1,52 @@
+# Represents a landmark or point of interest
+class Landmark
+  attr_reader :name, :type, :description
+
+  def initialize(name, type, description)
+    @name = name
+    @type = type
+    @description = description
+  end
+
+  def to_s
+    "Name: #{name}, Type: #{type}, Description: #{description}"
+  end
+end
+
+# Represents the city of Junagadh
+class JunagadhInfo
+  def initialize
+    @facts = {
+      "Location" => "Gujarat, India",
+      "Population" => "Approx. 400,000 (2023)",
+      "Known For" => "Girnar hills, Asiatic lions, historical forts, and temples"
+    }
+    @landmarks = []
+    
+    add_landmark("Uparkot Fort", "Historical Place", "An ancient fort in the heart of the city with historical caves.")
+    add_landmark("Girnar", "Hill/Religious Site", "A holy mountain range with temples of various religions on its peaks.")
+    add_landmark("Mahabat Maqbara", "Tomb/Historical Place", "A mausoleum known for its unique blend of architecture.")
+  end
+
+  def add_landmark(name, type, description)
+    @landmarks << Landmark.new(name, type, description)
+  end
+
+  def get_fact(name)
+    @facts[name]
+  end
+
+  def search_landmarks_by_type(type)
+    @landmarks.select { |l| l.type == type }
+  end
+end
+
+# Main script logic
+junagadh = JunagadhInfo.new
+puts "Population: #{junagadh.get_fact('Population')}"
+
+puts "\nSearching for historical places:"
+junagadh.search_landmarks_by_type("Historical Place").each { |l| puts l }
+
+puts "\nSearching for hills:"
+junagadh.search_landmarks_by_type("Hill/Religious Site").each { |l| puts l }
